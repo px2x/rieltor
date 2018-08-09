@@ -1,0 +1,37 @@
+<section class="content">
+    <form ng-submit="submit()" name="form">
+        <div class="col-1-2 content">
+            <md-input-container style="margin-bottom: 0px;width: 100%;" class="no-errors">
+                <label>Заголовок</label>
+                <input ng-model="page.title" type="text" maxlength="255"/>
+            </md-input-container>
+
+            <md-input-container style="margin-bottom: 0px;width: 100%;" class="no-errors">
+                <label>Slug</label>
+                <input ng-model="page.slug" type="text" maxlength="255"/>
+            </md-input-container>
+
+            <md-input-container style="margin-bottom: 0px;width: 100%;" class="no-errors">
+                <label>Заголовок страницы (meta title)</label>
+                <input ng-model="page.meta_title" type="text" maxlength="255"/>
+            </md-input-container>
+
+            <md-input-container style="margin-bottom: 0px;width: 100%;" class="no-errors">
+                <label>Ключевые слова (meta keywords)</label>
+                <input ng-model="page.meta_keywords" type="text" maxlength="255"/>
+            </md-input-container>
+
+            <md-input-container style="margin-bottom: 0px;width: 100%;" class="no-errors">
+                <label>Описание (meta description)</label>
+                <input ng-model="page.meta_description" type="text" maxlength="255"/>
+            </md-input-container>
+        </div>
+        <div class="col-1-2 content">
+            <div>Текст страницы:</div>
+            <div text-angular="text-angular" ng-model="page.content"></div>
+        </div>
+        <br>
+        <md-button class="md-raised md-primary" ng-click="submit()" aria-label="Submit" ng-disabled="saving || $form.invalid" style="margin-left: 0px;" ng-bind="saveButton"></md-button>
+        <md-button class="md-raised md-warn" aria-label="Cancel" ng-click="back()">Отмена</md-button>
+    </form>
+</section>

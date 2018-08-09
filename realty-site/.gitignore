@@ -1,0 +1,5 @@
+/vendor
+.env
+/nbproject/private/
+/public/uploads/
+.idea/

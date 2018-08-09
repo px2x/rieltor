@@ -1,0 +1,49 @@
+<div layout="column">
+    <div layout="row" layout-xs="column">
+        <md-input-container class="md-icon-float md-block" flex="40">
+            <form ng-submit="loadData(true);">
+                <!-- Use floating label instead of placeholder -->
+                <label>Поиск</label>
+                <input ng-model="filter.search" type="text"/>
+            </form>
+        </md-input-container>
+        <div flex></div>
+    </div>
+
+    <div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th class="">Имя</th>
+                    <th class="nowrap text-center fixed-width" width="95">Телефон</th>
+                    <th class="nowrap text-center fixed-width" width="95">Email</th>
+                    <th class="nowrap text-center fixed-width" width="95">Дата&nbsp;регистрации</th>
+                    <th class="fixed-width" width="95"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in items">
+                    <td ng-bind="item.name"></td>
+                    <td ng-bind="item.phone"></td>
+                    <td ng-bind="item.email"></td>
+                    <td ng-bind="item.created_at" class="text-center"></td>
+                    <td>
+                        <div layout="row" class="buttons">
+                            <a ng-href="/users/view/{{item.id}}" title="Просмотр">
+                                <md-icon class="material-icons">view_headline</md-icon>
+                            </a>&nbsp;
+                            <a ng-click="deleteItem(item.id)" aria-label="Remove" title="Удалить">
+                                <md-icon class="material-icons">delete</md-icon>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-show="!loading && items.length === 0">
+                    <td colspan="5" class="text-center">Пользователи не найдены</td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination page="filter.page" limit="filter.limit" total="total" load-data="loadData($page, $limit)"></pagination>
+    </div>
+    
+</div>

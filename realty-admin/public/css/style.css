@@ -1,0 +1,424 @@
+body{
+    height: 100vh;
+    background: url('/img/bg.jpg') no-repeat;
+    background-size: cover;
+}
+a {
+    cursor: pointer;
+}
+button {
+    vertical-align: top;
+}
+.main-footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+.content-wrapper {
+    width: 1400px;
+    max-width: 100%;
+    position: relative;
+    height: 100%;
+    display: block;
+    margin: 0 auto 10px;
+}
+/*.content-wrapper > .content {
+    margin-bottom: 80px;
+}*/
+.error-content {
+    padding-top: 25px;
+}
+.no-errors .md-errors-spacer {
+    min-height: 5px;
+}
+.loading-cloak {
+    position: absolute;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    background: url('/img/loading-page.gif') no-repeat center 30% rgba(255, 255, 255, 0.7);
+    top: 0;
+    left: 0;
+}
+.loading-cloak-text {
+    position:absolute;
+    top:50%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* angular material fixes */
+md-whiteframe {
+  background: #fff;
+  padding: 20px !important;
+  min-height: 250px;
+  min-width: 150px;
+}
+md-autocomplete {
+  width: 100%;
+}
+md-autocomplete {
+  min-width: 165px;
+}
+md-datepicker {
+  height: 45px;
+}
+md-checkbox {
+  margin-top: 3px;
+}
+md-input-container.md-block {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+md-tab-content {
+  padding-top: 20px;
+}
+md-radio-group {
+  height: 20px;
+}
+.md-toolbar-tools {
+  height: 80px;
+  min-height: 80px;
+}
+
+/* Common classes */
+.ng-enter     {  
+    z-index: 8888;
+    -webkit-animation:scaleUp 0.3s both ease-in;
+    -moz-animation:scaleUp 0.3s both ease-in;
+    animation:scaleUp 0.3s both ease-in;    
+}
+.button-mini {
+    min-height: 20px;
+    height: 20px;
+    line-height: 20px;
+    min-width: 50px;
+    margin: 0;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+.clearfix {
+    clear: both;
+    display: table;
+    content: '';
+}
+.text-center {
+    text-align: center;
+}
+.mini-text {
+    font-size: 12px;
+    color: #999;
+}
+.pagination-block .mini-text {
+    padding-top: 34px;
+}
+.pagination-block [type="submit"] {
+    width: 0px;
+    height: 0px;
+    padding: 0;
+    border: 0;
+}
+.pagination-block .page-input {
+    width: 50px;
+}
+ 
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.col-1-2 {
+  width: 50%;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.col-1-2.content div {
+    margin-top: 5px;
+    padding-left: 5px;
+}
+
+#map {
+    width: 100%;
+    height: 220px;
+}
+
+/** Fileupload */
+.fileupload-block input[type="file"] {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    font-size: 120px !important;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white !important;
+    cursor: pointer;
+    display: block !important;
+    direction: ltr;
+    height: auto !important;
+    width: auto !important;
+    max-width: 5000px;
+}
+.fileupload-button {
+    overflow: hidden;
+    height: 38px;
+}
+.fileupload-button button {
+    margin: 0px;
+}
+.fileupload-card md-input-container {
+    margin-bottom: 0px;
+    height: 40px;
+}
+.fileupload-panel {
+    margin-bottom: 5px;
+    width: 100%;
+}
+.fileupload-card md-fab-toolbar.md-right md-fab-trigger.align-with-text {
+  left: 7px; 
+}
+.fileupload-card .md-toolbar-tools, 
+.fileupload-card .md-fab-toolbar-wrapper,
+.fileupload-card .md-fab-toolbar-content{
+    height: 45px;
+    min-height: 45px;
+}
+.fileupload-card md-fab-trigger .md-mini {
+    margin: 0px;
+    margin-right: 10px;
+}
+.fileupload-block .md-toolbar-tools {
+    padding-bottom: 8px;
+    padding-right: 4px;
+}
+.fileupload-block .fileupload-card {
+    position: relative;
+}
+.fileupload-block .loading-layout {
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+}
+.fileupload-block .delete-photo-text {
+    font-size: 14px;
+    text-align: center;
+    margin-top: 50%;
+}
+.fileupload-block .delete-photo-text a{
+    text-decoration: underline;
+    margin-top: 5px;
+    display: block;
+}
+.fileupload-block .loading-icon{
+    margin-top: 90px;
+}
+.fileupload-block .main-photo {
+    box-shadow: 0 0 10px rgb(63,81,181);
+}
+
+/* Top bar */ 
+#top {
+  height: 80px;
+  min-height: 80px;
+}
+#top button {
+    vertical-align: top;
+}
+#top .logo{
+    height: 32px;
+}
+#top .admin-name{
+    vertical-align: top;
+    color: #333;
+    font-size: 16px;
+    line-height: 35px;
+    margin-left: 5px;
+}
+#top .menu-button{
+    min-width: 36px;
+}
+
+/* Menu */
+.left-menu li {
+    display: block;
+    height: 40px;
+} 
+.left-menu li a {
+    color: #333;
+}
+.left-menu li md-icon {
+    font-size: 20px;
+}
+
+/* Login */
+.login-block-novalid {
+    color: #888;
+    font-size: 12px;
+}
+.login-button {
+    width: 100%;
+    margin: 10px 0;
+}
+
+/* Content */
+.content-header h1 {
+    margin-top: 10px;
+}
+.content-header > .breadcrumb {
+    font-size: 12px;
+    padding-left: 0;
+    margin: 0;
+}
+.content-header > .breadcrumb > li {
+    display: inline-block;
+    outline: none;
+    list-style: none;
+}
+.content-header > .breadcrumb > li > a {
+    color: #444;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+}
+.content-header > .breadcrumb > li md-icon {
+    font-size: 18px;
+}
+.content-header > .breadcrumb > li > a > .fa,
+.content-header > .breadcrumb > li > a > .glyphicon,
+.content-header > .breadcrumb > li > a > .ion {
+    margin-right: 5px;
+}
+.content-header > .breadcrumb > li + li:before {
+    content: '>\00a0';
+}
+
+.font-size-big {
+    font-size: 72px;
+    line-height: 72px;
+    margin-top: -20px;
+}
+.light-blue {
+    color: #03A9F4;
+}
+.grey-bottom {
+    border-top: 1px solid rgba(0,0,0,0.12);
+    background-color: #FAFAFA;
+    padding: 16px;
+    margin-top: 20px;
+}
+.grey-bottom a, .grey-text {
+    text-decoration: none;
+    color: rgba(0,0,0,0.54);
+}
+.no-padding {
+    padding: 0px !important;
+}
+.mt-card-menu {
+    margin-top: 64px;
+}
+
+.statusToast {
+    position: inherit !important;
+    color: white;
+    border-radius: 5px !important;
+    padding: 8px !important;
+}
+
+.background-new {
+    background-color: blue !important;
+}
+.background-viewed {
+    background-color: green !important;
+}
+.background-progress {
+    background-color: orangered !important;
+}
+.background-archived {
+    background-color: slategray !important;
+}
+.width30 {
+    width: 30% !important;
+}
+.width15 {
+    width: 15% !important;
+}
+.alginRigth {
+    text-align: right;
+}
+.parInput input{
+    width: 103% !important;
+}
+.copy {
+    cursor: pointer;
+}
+.copy:hover {
+    background:#ddd;
+}
+.md-icon-button+.md-datepicker-input-container {
+    margin-left:0px;
+}
+.md-datepicker-input {
+    min-width:150px;
+}
+
+/* animate */
+/* scale up */
+@keyframes scaleUp {
+  from    { opacity: 0.3; transform: scale(0.6); }
+}
+@-moz-keyframes scaleUp {
+  from    { opacity: 0.3; -moz-transform: scale(0.6); }
+}
+@-webkit-keyframes scaleUp {
+  from    { opacity: 0.3; -webkit-transform: scale(0.6); }
+}
+
+.input-order {
+    width: 100%;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+.input-order > label {
+    color: #3c3b3b !important;
+}
+.input-order > input {
+    color: #3c3b3b !important;
+}
+.input-order > textarea {
+    color: #3c3b3b !important;
+}
+table .mini-photo {
+    max-width: 100px;
+}
+table .ads-name {
+    line-height:24px;
+}
+table .ads-name span {
+    vertical-align: top;
+}
+
+@media only print {
+    /* Intended for paged material and for documents
+       viewed on screen in print preview mode .*/
+    md-toolbar {
+        display: none;
+    }
+    .order-button {
+        display: none;
+    }
+    .printHide {
+        display: none;
+    }
+}

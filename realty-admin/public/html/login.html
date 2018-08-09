@@ -1,0 +1,32 @@
+<form method="post" name="form" ng-submit="submit()" ng-autocomplete="off">
+    <md-whiteframe class="md-whiteframe-z5 form-background frame-xs" layout-xs="column" layout="row" layout-wrap flex-direction="row">
+        <div layout="column" class="full-page">
+            <div class="text-center">
+                <h2 ng-bind="h1"></h2>
+            </div>
+            <div class="login-fields">
+                <md-input-container class="md-block">
+                    <input type="email" i18n pl="placeholders.email" name="email" required ng-model="auth.email">
+                    <div ng-show="form.$submitted || form.email.$touched">
+                        <span class="login-block-novalid" ng-show="form.login.$error.required" i18n key="text.login_error"></span>
+                        <span class="login-block-novalid" ng-show="form.email.$error.email" i18n key="text.invalid_login_error"></span>
+                    </div>  
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <input type="password" i18n pl="placeholders.password" name="password" minlength="6" required ng-model="auth.password">
+                    <div ng-show="form.$submitted || form.password.$touched">
+                        <span class="login-block-novalid" ng-show="form.password.$error.required" i18n key="text.password_error"></span>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <md-checkbox aria-label="Checkbox" ng-model="auth.remember" class="md-primary">
+                        <span i18n key="common.remember"></span>
+                    </md-checkbox>
+                </md-input-container>
+            </div>
+            <div class="login-submit">
+                <md-button ng-attr-type="submit" class="md-raised md-primary md-button button-submit login-button" ng-disabled="loading || form.$invalid" aria-label="description" ng-click="submit()" ng-bind="buttonText"></md-button>
+            </div>
+        </div>
+    </md-whiteframe>
+</form>

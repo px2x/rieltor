@@ -1,0 +1,70 @@
+<section class="content" id="sectionPrint" >
+    <div class="row">
+        <div class="col-1-2">
+            <md-input-container class="input-order">
+                <label>Имя:</label>
+                <input type="text" ng-model="order.username" ng-disabled="true">
+            </md-input-container>
+            <md-input-container class="input-order">
+                <label>Телефон:</label>
+                <input type="text" ng-model="order.phone" ng-disabled="true">
+            </md-input-container>
+            <md-input-container class="input-order">
+                <label>Коментарий:</label>
+                <textarea type="text" ng-model="order.comment" ng-disabled="true"></textarea>
+            </md-input-container>
+        </div>
+        <div class="col-1-2 content">
+            <md-input-container class="input-order">
+                <label>Статус заказа:</label>
+                <input type="text" ng-model="status[order.status]" ng-disabled="true">
+            </md-input-container>
+            <md-input-container class="input-order">
+                <label>Дата создания:</label>
+                <input type="text" ng-model="order.created_at" ng-disabled="true">
+            </md-input-container>
+            
+        </div>
+    </div>
+    <table class="table table-hover" style="margin-top: 20px;" >
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Цена</th>
+                <th>Адрес</th>
+                <th>Контактный телефон</th>
+                <th class="printHide">Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="ads in order.order">
+                <td>
+                    <div ng-bind="ads.name"></div>
+                </td>
+                <td>
+                    <div ng-bind="ads.price"></div>
+                </td>
+                <td>
+                    <div ng-bind="ads.address"></div>
+                </td>
+                <td>
+                    <div ng-bind="ads.phone||'-'"></div>
+                </td>
+                <td class="printHide" style="text-align: center;">
+                    <a href="/ads/view/{{ads.id}}">
+                        <md-icon class="material-icons ng-scope">view_headline</md-icon>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <div class="order-button">
+        <md-button ng-disabled="progress || order.status == 'archived'" ng-click="archive()" class="md-raised md-primary">В архив</md-button>
+        <md-button ng-disabled="progress" ng-click="printSection()" class="md-raised md-primary">Распечатать</md-button>
+        <md-button ng-disabled="progress" ng-click="backToList()" class="md-raised md-primary">
+            <md-icon class="material-icons ng-scope">keyboard_arrow_left</md-icon>
+            Назад к списку
+        </md-button>
+    </div>
+</section>

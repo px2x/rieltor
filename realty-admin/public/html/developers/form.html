@@ -1,0 +1,20 @@
+<section class="content">
+    <form ng-submit="submit()" name="form"> 
+        <div layout="row" layout-align="space-between start">
+            <md-input-container flex="40" style="margin-bottom: 0px;" ng-class="pristine.type ? 'md-changed' : ''">
+                <label>Название застройщика</label>
+                <input ng-model="developer.name" required type="text"/>
+            </md-input-container>
+        </div>
+        <div layout="row" layout-align="space-between start">
+            <md-input-container flex="40" style="margin-bottom: 0px;" class="no-errors">
+                <label>Описание</label>
+                <input ng-model="developer.description" type="text"/>
+            </md-input-container>
+        </div>
+             
+        <br>
+        <md-button class="md-raised md-primary" ng-click="submit()" aria-label="Submit" ng-disabled="saving || $form.invalid" style="margin-left: 0px;" ng-bind="saveButton"></md-button>
+        <md-button class="md-raised md-warn" aria-label="Cancel" ng-click="back()">Отмена</md-button>
+    </form>
+</section>

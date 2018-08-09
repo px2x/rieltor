@@ -1,0 +1,33 @@
+<md-tabs md-dynamic-height md-border-bottom>
+    <md-tab label="Импорт Объявлений">
+        <md-content class="md-padding">
+            <div layout="row" layout-align="space-between start">
+                <md-button  class="md-raised md-primary nomarg-x btn-load-img" ng-click="showFileDialog()" ng-disabled="loadingXML" >Выбрать файл xml</md-button>    
+                <form class="hide" ng-submit="loadAds()" >
+                    <input type="file" name="ads" fileread="file"/>
+                </form>
+            </div>
+            </br>
+            </br>
+            </br>
+        <div layout="row" layout-sm="column" layout-align="space-around" ng-show="loadingXML">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+
+        <div class="col-1-2" layout-align="space-between start" ng-show="data">
+            <div>Всего: {{data.count}}</div>
+            <div>Новых: {{data.countNew}}</div>
+            
+        </div>
+            </br>
+            </br>
+        <div class="col-1-2" layout-align="space-between start" ng-show="data">
+                <md-button  class="md-raised md-primary nomarg-x btn-load-img" ng-click="importXml('all')" ng-disabled="loadingXML" >Импортировать все</md-button>    
+                <md-button  class="md-raised md-primary nomarg-x btn-load-img" ng-click="importXml('new')" ng-disabled="loadingXML" >Импортировать новые</md-button>    
+        </div>
+        
+        
+        
+        </md-content>
+    </md-tab>
+</md-tabs>

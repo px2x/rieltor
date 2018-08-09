@@ -1,0 +1,81 @@
+<section class="content">
+    <div class="row">
+        <div class="col-1-2">
+            <map lat="ad.lat" lng="ad.lng" ng-if="ad"></map>
+            <br>
+            <md-button ng-disabled="progress" href="/ads/edit/{{ad.id}}" class="md-raised md-primary">Редактировать</md-button>
+            <md-button ng-disabled="progress" ng-click="deleteItem()" class="md-raised md-warn">Удалить</md-button>
+        </div>
+        <div class="col-1-2 content">
+            <div>Номер объявления: <span class="copy" ng-click="copyText(ad.id)" title="Скопировать в буфер">{{ad.id}}</span></div>
+            <div>Адрес: {{ad.address}}</div>
+            <div>Тип недвижимости: {{i18n('ads_types', ad.type)}}</div>
+            <div>Подтип: {{ad.subtype!=null ? i18n('ads_subtype', ad.subtype.toString()) : '-'}}</div>
+            <div>Материал дома: {{ad.material ? i18n('object_materials', ad.material) : '-'}}</div>
+            <div>Муниципальный район: {{ad.district_m ? districts[ad.district_m] : '-'}}</div>
+            <div>Общепринятый район: {{ad.district_o ? districts[ad.district_o] : '-'}}</div>
+            <div>Застройщик: {{ad.developer_name||'-'}}</div>
+            <div>Жилищный комплекс {{ad.complex_name||'-'}}</div>
+            <div>Описание: {{ad.description||'-'}}</div>
+            <div>Служебная отметка: {{ad.comment||'-'}}</div>
+            <div>Состояние: {{ad.condition ? i18n('object_conditions', ad.condition) : '-'}}</div>
+            
+            <div>Год постройки: {{ad.year || '-'}}</div>
+            <div>Количество этажей: {{ad.floor_t || '-'}}</div>
+            <div>Этаж: {{ad.floor|| '-'}}</div>
+            <div>Цена: {{ad.price || '-'}} руб.</div>
+            <div ng-if="ad.phone">Контактный телефон: <span class="copy" ng-click="copyText(ad.phone)" title="Скопировать в буфер">{{ad.phone}}</span></div>
+            <div ng-if="ad.warning">
+                <img src="/img/warning_icon.png" />&nbsp;Предупреждение:<br>
+                <div ng-bind-html="ad.warning_m"></div>
+            </div>
+            <div style="margin-top:15px;">Дата публикации: {{ad.published_at|| '-'}}</div>
+            <div>Дата последнего обновления: {{ad.updated_at|| '-'}}</div>
+        </div>
+    </div>
+    <table class="table table-hover" style="margin-top: 20px;" ng-if="ad.type==1">
+        <thead>
+            <tr>
+                <th>Кол-во комнат</th>
+                <th>Общая площадь</th>
+                <th>Жилая площадь</th>
+                <th>Площадь кухни</th>
+                <th>Площадь участка/гаража</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div style="padding-left: 60px;">{{ad.rooms||'-'}}</div>
+                </td>
+                <td>
+                    <div style="padding-left: 60px;">{{ad.sq1||'-'}}</div>
+                </td>
+                <td>
+                    <div style="padding-left: 60px;">{{ad.sq2||'-'}}</div>
+                </td>
+                <td>
+                    <div style="padding-left: 60px;">{{ad.sq3||'-'}}</div>
+                </td>
+                <td>
+                    <div style="padding-left: 60px;">{{ad.sq4||'-'}}</div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <md-divider></md-divider>
+    <br><br>
+    <br>
+    <md-divider></md-divider>
+    <br>
+    <div class="fileupload-block" flex layout="row">
+        <md-card ng-repeat="photo in photos" flex="25" layout="column" layout-align="space-between space-between" class="fileupload-card" ng-class="{true: 'main-photo'}[photo.main==1]">
+            <img ng-src="{{'/uploads/photos/' + photo.folder + '/' + photo.filename + '_th.jpg'}}" class="md-card-image" alt="">
+            <md-card-content>{{photo.description}}</md-card-content>
+        </md-card>
+    </div>
+    <div class="text-center" ng-if="photos && photos.length===0">У этого объявления пока нет фотографий</div>
+    <br>
+    <br>
+</section>

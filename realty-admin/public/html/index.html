@@ -1,0 +1,46 @@
+<div layout="row" layout-align="space-between top">
+    <md-card flex="25">
+        <md-menu>
+            <md-button aria-label="Open phone interactions menu" class="md-button" ng-click="$mdOpenMenu($event)">
+                <div>{{period}}</div>
+            </md-button>
+            <md-menu-content width="2">
+                <md-menu-item>
+                    <md-button ng-click="selectPeriod('today')">Сегодня</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-click="selectPeriod('week')">Неделя</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-click="selectPeriod('month')">Месяц</md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+        <md-card-content class="no-padding">
+            <div class="font-size-big text-center light-blue" style="margin-top:-4px">{{ordersCount}}</div>
+            <div class="text-center grey-text">{{ordersText}}</div>
+            <div class="grey-bottom text-center"><a ng-href="/orders">Подробнее</a></div>
+        </md-card-content>
+    </md-card>
+    <md-card flex="25">
+        <md-card-content class="no-padding mt-card-menu">
+            <div class="font-size-big text-center light-blue">{{adsCount}}</div>
+            <div class="text-center grey-text">{{adsText}}</div>
+            <div class="grey-bottom text-center"><a ng-href="/ads">Подробнее</a></div>
+        </md-card-content>
+    </md-card>
+    <md-card flex="25">
+        <md-card-content class="no-padding mt-card-menu">
+            <div class="font-size-big text-center light-blue">{{objectsCount}}</div>
+            <div class="text-center grey-text">{{objectsText}}</div>
+            <div class="grey-bottom text-center"><a ng-href="/objects">Подробнее</a></div>
+        </md-card-content>
+    </md-card>
+    <md-card flex="25">
+        <md-card-content class="no-padding mt-card-menu">
+            <div class="font-size-big text-center light-blue">{{usersCount}}</div>
+            <div class="text-center grey-text">{{usersText}}</div>
+            <div class="grey-bottom text-center"><a ng-href="/users">Подробнее</a></div>
+        </md-card-content>
+    </md-card>
+</div>

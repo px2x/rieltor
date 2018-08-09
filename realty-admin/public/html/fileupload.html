@@ -1,0 +1,55 @@
+<div class="fileupload-block" >
+    <div flex layout="row">
+        <md-card ng-repeat="photo in $ctrl.photos" flex="25" layout="column" layout-align="space-between space-between" class="fileupload-card" ng-class="{true: 'main-photo'}[photo.main==1]">
+            <img ng-src="{{photo.src || '/uploads/photos/' + photo.folder + '/' + photo.filename + '_th.jpg'}}" flex="none" class="md-card-image" alt="">
+            <div class="loading-layout" ng-show="photo.deleted">
+                <div class="delete-photo-text">Фотография будет удалена после сохранения.<br><a ng-click="cancelDeleting($index)">Отменить</a></div>
+            </div>
+            <div class="loading-layout" ng-if="photo.error">
+                <div class="delete-photo-text">При загрузке фотографии произошла ошибка. Загрузите фотографию заново</div>
+            </div>
+            <div class="loading-layout" ng-show="photo.loading">
+                <div layout="column" layout-align="center center" class="loading-icon">
+                    <md-progress-circular md-mode="indeterminate" class="md-warn md-hue-1" md-diameter="90"></md-progress-circular>
+                    <div class="text-center">{{photo.name}}</div>
+                </div>
+            </div>
+            <div layout="column" layout-align="space-between center">
+                <md-input-container>
+                    <label>Описание</label>
+                    <input ng-model="photo.description" type="text">
+                </md-input-container>
+                <div class="fileupload-panel">
+                    <md-fab-toolbar md-direction="left">
+                        <md-fab-trigger class="align-with-text">
+                            <md-button aria-label="menu" class="md-fab md-mini md-primary">
+                                <md-icon class="material-icons">menu</md-icon>
+                            </md-button>
+                        </md-fab-trigger>
+                        <md-toolbar>
+                            <md-fab-actions class="md-toolbar-tools" align-items="center">
+                                <md-button class="md-icon-button" aria-label="close">
+                                    <md-icon class="material-icons">menu</md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button" ng-click="deletePhoto($index)" aria-label="remove">
+                                    <md-icon class="material-icons" title="Удалить">delete</md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button" aria-label="set as main" ng-click="setAsMain($index)">
+                                    <md-icon class="material-icons" title="Использовать для списка">picture_in_picture</md-icon>
+                                </md-button>
+                            </md-fab-actions>
+                        </md-toolbar>
+                    </md-fab-toolbar>
+                </div>
+            </div>
+        </md-card>
+    </div>
+    <div>
+        <form>
+            <md-input-container class="fileupload-button">
+                <md-button class="md-raised md-primary" aria-label="Button">Загрузить</md-button>
+                <input type="file" ng-init="initUpload()" ng-model="files" aria-label="Fileupload" class="fileupload-input" accept="image/jpeg;image/jpg" multiple />
+            </md-input-container>
+        </form>
+    </div>
+</div>

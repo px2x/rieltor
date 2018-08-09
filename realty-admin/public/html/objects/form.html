@@ -1,0 +1,235 @@
+<section class="content">
+    <form ng-submit="submit()" name="form"> 
+        <div class="row">
+            <div class="col-1-2">
+                <map lat="object.lat" lng="object.lng" ng-if="object"></map>
+            </div>
+            <div class="col-1-2 content">
+                <div ng-show="editAddress" layout="row" layout-align="space-between" style="padding-left: 0px; height: 45px;">
+                    <md-autocomplete flex="70"
+                        md-items="item in searchAddress(address)"
+                        md-search-text="address"
+                        md-selected-item="selectedAddress"
+                        md-search-text-change="searchAddress(address)"
+                        md-item-text="item.address"
+                        md-min-length="3"
+                        md-max-length="10"
+                        placeholder="Улица + дом">
+                        <md-item-template>
+                            <span md-highlight-text="address">{{item.address}}</span>
+                        </md-item-template>
+                    </md-autocomplete>
+                </div>
+                <md-button ng-show="editAddress" style="margin-left: 0px;" class="md-raised md-primary" ng-disabled="!selectedAddress" ng-click="saveAddress()">Сохранить адрес</md-button>
+                <md-button ng-show="editAddress" style="margin-left: 0px;" class="md-raised md-primary" ng-click="closeAddress()">Отмена</md-button>
+                <div ng-hide="editAddress">
+                    <div class="text-muted" ng-bind="selectedAddress.address||'Адрес не указан'"></div>
+                    <md-button style="margin-left: 0px;" class="md-raised md-primary add-parking-btn" ng-click="editAddress=true">Изменить адрес</md-button>
+                </div>
+                <div layout="row" layout-align="space-between start">
+                    <md-input-container flex="50" style="margin-bottom: 0px;" ng-class="pristine.type ? 'md-changed' : ''">
+                        <label>Тип недвижимости</label>
+                        <md-select ng-model="object.type" ng-change="setChanged('type')" required>
+                            <md-option ng-repeat="(k,v) in objectTypes" value="{{k}}">
+                              {{v}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container flex="30" style="margin-bottom: 0px;" class="no-errors">
+                        <label>Год постройки</label>
+                        <input ng-model="object.year" type="text" maxlength="4"/>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="space-between start">
+                    <md-input-container flex="50" style="margin-bottom: 0px;">
+                        <label>Материал дома</label>
+                        <md-select ng-model="object.material" required>
+                            <md-option ng-repeat="(k,v) in objectMaterials" value="{{k}}">
+                              {{v}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container flex="30" style="margin-bottom: 0px;" class="no-errors">
+                        <label>Этажей в доме</label>
+                        <input ng-model="object.cnt_floors" required type="text" maxlength="3"/>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="space-between start">
+                    <md-input-container flex="45" style="margin-bottom: 0px;">
+                        <label>Муниципальный район</label>
+                        <md-select ng-model="object.district_m">
+                            <md-option ng-repeat="(k,v) in districtsM" required value="{{k}}">
+                              {{v}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container flex="45" style="margin-bottom: 0px;">
+                        <label>Общепринятый район</label>
+                        <md-select ng-model="object.district_o">
+                            <md-option ng-repeat="(k,v) in districtsO" required value="{{k}}">
+                              {{v}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="space-between start" style="margin-top: 20px;">
+                    <md-autocomplete flex="45"
+                        md-items="item in searchData(developer, 'developers')"
+                        md-search-text="developer"
+                        md-selected-item="selectedDeveloper"
+                        md-search-text-change="searchData(developer, 'developers')"
+                        md-item-text="item.name"
+                        md-min-length="3"
+                        md-max-length="10"
+                        placeholder="Застройщик">
+                        <md-item-template>
+                            <span md-highlight-text="name">{{item.name}}</span>
+                        </md-item-template>
+                    </md-autocomplete>
+                    <md-autocomplete flex="45"
+                        md-items="item in searchData(complex, 'complexes')"
+                        md-search-text="complex"
+                        md-selected-item="selectedComplex"
+                        md-search-text-change="searchData(complex, 'complexes')"
+                        md-item-text="item.name"
+                        md-min-length="3"
+                        md-max-length="10"
+                        placeholder="Жилищный комплекс">
+                        <md-item-template>
+                            <span md-highlight-text="name">{{item.name}}</span>
+                        </md-item-template>
+                    </md-autocomplete>
+                </div>
+                <div layout="row" layout-align="space-between start">
+                    <md-input-container flex="45" style="margin-bottom: 0px;" class="no-errors">
+                        <label>Описание</label>
+                        <input ng-model="object.description" type="text" maxlength="255"/>
+                    </md-input-container>
+                    <md-input-container flex="45" style="margin-bottom: 0px;" class="no-errors">
+                        <label>Служебная отметка</label>
+                        <input ng-model="object.comment" type="text" maxlength="255"/>
+                    </md-input-container>
+                </div>
+                
+                <div layout="row" layout-align="space-between start" style="margin-top: 10px;">
+                    <md-input-container flex="45" style="margin-bottom: 0px;" class="no-errors">
+                        <label>Год последнего капитального ремонта</label>
+                        <input ng-model="object.last_cap" type="text" maxlength="4"/>
+                    </md-input-container>
+                    <md-input-container flex="45" style="margin-bottom: 0px;" class="no-errors">
+                        <label>Год последнего кап ремонта эл.</label>
+                        <input ng-model="object.last_el" type="text" maxlength="4"/>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="space-between start" style="margin-top: 10px;">
+                    <md-input-container flex="45" style="margin-bottom: 0px;" class="no-errors">
+                        <label>Год последнего кап ремонта крыши</label>
+                        <input ng-model="object.last_roof" type="text" maxlength="4"/>
+                    </md-input-container>
+                    <md-input-container flex="45" style="margin-bottom: 0px;" class="no-errors">
+                        <label>Год последнего кап ремонта фасада</label>
+                        <input ng-model="object.last_fasade" type="text" maxlength="4"/>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="space-between start" style="margin-top: 10px;">
+                    <md-input-container flex="45" style="margin-bottom: 0px;" class="no-errors">
+                        <label>Год замены лифтов</label>
+                        <input ng-model="object.lifts_changed" type="text" maxlength="4"/>
+                    </md-input-container>
+                    <md-input-container flex="45" style="margin-bottom: 0px;" class="no-errors">
+                        <label>Состояние</label>
+                        <md-select ng-model="object.condition">
+                            <md-option ng-repeat="(k,v) in objectConditions" value="{{k}}">
+                              {{v}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="space-between start" style="margin-top: 10px;">
+                    <md-input-container flex="45" style="margin-bottom: 0px;" class="no-errors">
+                        <label>Количество лифтов</label>
+                        <input ng-model="object.cnt_lifts" type="text" maxlength="2"/>
+                    </md-input-container>
+                    <md-input-container flex="45" style="margin-bottom: 0px;" class="no-errors">
+                        <label>Количество подъездов</label>
+                        <input ng-model="object.cnt_porchs" type="text" maxlength="2"/>
+                    </md-input-container>
+                </div>
+            </div>
+            <table class="table table-hover" style="margin-top: 20px;" ng-show="object.type==1">
+                <thead>
+                    <tr>
+                        <th>Кол-во комнат</th>
+                        <th>Общая площадь</th>
+                        <th>Жилая площадь</th>
+                        <th>Площадь кухни</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1 комната</td>
+                        <td style="padding-left: 40px;">
+                            <md-input-container style="margin: 0px; width: 50px" class="no-errors">
+                                <input aria-label="Common" ng-model="object.sq1_c" type="text" maxlength="3" />
+                            </md-input-container>
+                        </td>
+                        <td style="padding-left: 40px;">
+                            <md-input-container style="margin: 0px; width: 50px" class="no-errors">
+                                <input aria-label="Common" ng-model="object.sq1_l" type="text" maxlength="3" />
+                            </md-input-container>
+                        </td>
+                        <td style="padding-left: 40px;">
+                            <md-input-container style="margin: 0px; width: 50px" class="no-errors">
+                                <input aria-label="Common" ng-model="object.sq1_k" type="text" maxlength="3" />
+                            </md-input-container>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2 комнаты</td>
+                        <td style="padding-left: 40px;">
+                            <md-input-container style="margin: 0px; width: 50px" class="no-errors">
+                                <input aria-label="Common" ng-model="object.sq2_c" type="text" maxlength="3" />
+                            </md-input-container>
+                        </td>
+                        <td style="padding-left: 40px;">
+                            <md-input-container style="margin: 0px; width: 50px" class="no-errors">
+                                <input aria-label="Common" ng-model="object.sq2_l" type="text" maxlength="3" />
+                            </md-input-container>
+                        </td>
+                        <td style="padding-left: 40px;">
+                            <md-input-container style="margin: 0px; width: 50px" class="no-errors">
+                                <input aria-label="Common" ng-model="object.sq2_k" type="text" maxlength="3" />
+                            </md-input-container>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3 комнаты</td>
+                        <td style="padding-left: 40px;">
+                            <md-input-container style="margin: 0px; width: 50px" class="no-errors">
+                                <input aria-label="Common" ng-model="object.sq3_c" type="text" maxlength="3" />
+                            </md-input-container>
+                        </td>
+                        <td style="padding-left: 40px;">
+                            <md-input-container style="margin: 0px; width: 50px" class="no-errors">
+                                <input aria-label="Common" ng-model="object.sq3_l" type="text" maxlength="3" />
+                            </md-input-container>
+                        </td>
+                        <td style="padding-left: 40px;">
+                            <md-input-container style="margin: 0px; width: 50px" class="no-errors">
+                                <input aria-label="Common" ng-model="object.sq3_k" type="text" maxlength="3" />
+                            </md-input-container>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <md-divider></md-divider>
+        <h2 class="text-center">Галарея</h2>
+        <fileupload view-mode="false" photos="photos"></fileupload>
+        <md-divider></md-divider>
+        <br>
+        <md-button class="md-raised md-primary" ng-click="submit()" aria-label="Submit" ng-disabled="saving || $form.invalid || !selectedAddress" style="margin-left: 0px;" ng-bind="saveButton"></md-button>
+        <md-button class="md-raised md-warn" aria-label="Cancel" ng-click="back()">Отмена</md-button>
+    </form>
+</section>

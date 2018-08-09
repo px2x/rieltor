@@ -1,0 +1,226 @@
+<md-tabs md-dynamic-height md-border-bottom md-selected="selectedIndex">
+    <md-tab label="Общее" ng-click="othersInit()">
+        <md-content class="md-padding">
+            <md-input-container flex="150" style="margin-bottom: 0px;" class="no-errors">
+                <form ng-submit="saveOther()"> 
+                    <label>Комиссия</label>
+                    <input ng-model="other.comission_price" required type="number"/>
+                </form>
+            </md-input-container>
+            <br>
+            <md-button class="md-raised md-primary" ng-click="saveOther()" aria-label="Submit" ng-disabled="saving" style="margin-left: 0px;">Save</md-button>
+        </md-content>
+    </md-tab>
+    <md-tab label="Контакты" ui-sref="tabs.contact" ng-click="contacts()">
+        <div ui-view="contact">
+            <md-content class="md-padding">
+                <div layout="row" layout-align="space-between start">
+                    <md-input-container flex="30" style="margin-bottom: 0px;" class="no-errors">
+                        <form ng-submit="submit(true)"> 
+                            <label>Контактный телефон</label>
+                            <input ng-model="contact.contact_phone" ng-change="phoneValid()" required type="tel"/>
+                        </form>
+                    </md-input-container>
+                    <md-input-container flex="30" style="margin-bottom: 0px;" class="no-errors">
+                        <form ng-submit="submit(true)"> 
+                            <label>Контактный email</label>
+                            <input ng-model="contact.contact_email" required type="text"/>
+                        </form>
+                    </md-input-container>
+                    <md-input-container flex="30" style="margin-bottom: 0px;" class="no-errors">
+                        <form ng-submit="submit(true)"> 
+                            <label>Контактный skype</label>
+                            <input ng-model="contact.contact_skype" required type="text"/>
+                        </form>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="space-between start">
+                    <md-input-container flex="30" style="margin-bottom: 0px;" class="no-errors">
+                        <form ng-submit="submit(true)"> 
+                            <label>Телефон в шапке</label>
+                            <input ng-model="contact.top_phone" required="required" type="text"/>
+                        </form>
+                    </md-input-container>
+                </div>
+                <br>
+                <md-button class="md-raised md-primary" ng-click="submit()" aria-label="Submit" ng-disabled="saving || $form.invalid" style="margin-left: 0px;" ng-bind="saveButton"></md-button>
+            </md-content>
+        </div>
+    </md-tab>
+    <md-tab label="Районы"  ng-click="districtsSettings('m')">
+        <md-content class="md-padding">
+            <div layout="column">
+                <div layout="row" layout-xs="column">
+                    <md-input-container class="md-icon-float md-block" flex="40">
+                        <form ng-submit="loadData(true);">
+                            <!-- Use floating label instead of placeholder -->
+                            <label>Поиск</label>
+                            <input ng-model="filter.search" type="text"/>
+                        </form>
+                    </md-input-container>
+                    <md-input-container class="md-icon-float md-block" flex="30">
+                        <label>Выберете тип района</label>
+                        <md-select ng-model="filter.type" ng-change="selectType()">
+                            <md-option value="">Все</md-option>
+                            <md-option ng-repeat="(k, st) in type" ng-value="k">
+                                {{st}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <md-input-container class="md-icon-float md-block alginRigth" flex="30">
+                        <md-button class="md-fab md-mini md-primary" ng-href="/districts/create">
+                            <md-tooltip md-direction="top"><span class="logout" i18n key="buttons.add"></span></md-tooltip>
+                            <md-icon class="material-icons">add</md-icon>
+                        </md-button>
+                    </md-input-container>
+                </div>
+
+                <div>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="" data-name='street'>Город</th>
+                                <th class="nowrap text-center fixed-width" data-name='type'>Название</th>
+                                <th class="nowrap text-center fixed-width" data-name='comment'>Тип</th>
+                                <th class="fixed-width" width="95"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in items">
+                                <td ng-bind="item.city"></td>
+                                <td ng-bind="item.name"></td>
+                                <td md-cell class="text-center">{{type[item.type]}}</td>
+                                <td>
+                                    <div layout="row" class="buttons">
+                                        <a ng-href="/districts/edit/{{item.id}}" title="Редактировать">
+                                            <md-icon class="material-icons">create</md-icon>
+                                        </a>&nbsp;
+                                        <a ng-click="deleteItem(item.id)" aria-label="Remove" title="Удалить">
+                                            <md-icon class="material-icons">delete</md-icon>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-show="!loading && items.length === 0">
+                                <td colspan="6" class="text-center">Районы не найдены</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <pagination page="filter.page" limit="filter.limit" total="total" load-data="loadData($page, $limit)"></pagination>
+                </div>
+            </div>
+            
+            
+            
+        </md-content>
+    </md-tab>
+    <md-tab label="Застройщики" ng-click="developersSettings()">
+        <md-content class="md-padding">
+            <div layout="column">
+                <div layout="row" layout-xs="column">
+                    <md-input-container class="md-icon-float md-block" flex="50">
+                        <form ng-submit="loadData(true);">
+                            <!-- Use floating label instead of placeholder -->
+                            <label>Поиск</label>
+                            <input ng-model="filter.search" type="text"/>
+                        </form>
+                    </md-input-container>
+
+                    <md-input-container class="md-icon-float md-block alginRigth" flex="50">
+                    <md-button class="md-fab md-mini md-primary" ng-href="/developers/create">
+                        <md-tooltip md-direction="top"><span class="logout" i18n key="buttons.add"></span></md-tooltip>
+                        <md-icon class="material-icons">add</md-icon>
+                    </md-button>
+                    </md-input-container>
+                </div>
+
+                <div>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="width30" data-name='street' >Имя</th>
+                                <th class="nowrap text-center fixed-width" data-name='type'>Описание</th>
+                                <th class="fixed-width" width="95"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in items">
+                                <td ng-bind="item.name"></td>
+                                <td ng-bind="item.description"></td>
+                                <td>
+                                    <div layout="row" class="buttons">
+                                        <a ng-href="/developers/edit/{{item.id}}" title="Редактировать">
+                                            <md-icon class="material-icons">create</md-icon>
+                                        </a>&nbsp;
+                                        <a ng-click="deleteItem(item.id)" aria-label="Remove" title="Удалить">
+                                            <md-icon class="material-icons">delete</md-icon>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-show="!loading && items.length === 0">
+                                <td colspan="6" class="text-center">Застройщики не найдены</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <pagination page="filter.page" limit="filter.limit" total="total" load-data="loadData($page, $limit)"></pagination>
+                </div>
+            </div>
+        </md-content>
+    </md-tab>
+    <md-tab label="Жилищные комплексы" ng-click="complexSettings()">
+        <md-content class="md-padding">
+            <div layout="column">
+                <div layout="row" layout-xs="column">
+                    <md-input-container class="md-icon-float md-block" flex="50">
+                        <form ng-submit="loadData(true);">
+                            <!-- Use floating label instead of placeholder -->
+                            <label>Поиск</label>
+                            <input ng-model="filter.search" type="text"/>
+                        </form>
+                    </md-input-container>
+
+                    <md-input-container class="md-icon-float md-block alginRigth" flex="50">
+                    <md-button class="md-fab md-mini md-primary" ng-href="/complex/create">
+                        <md-tooltip md-direction="top"><span class="logout" i18n key="buttons.add"></span></md-tooltip>
+                        <md-icon class="material-icons">add</md-icon>
+                    </md-button>
+                    </md-input-container>
+                </div>
+
+                <div>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="" data-name='street'>Имя</th>
+                                <th class="nowrap text-center fixed-width" data-name='type' width="95">Описание</th>
+                                <th class="fixed-width" width="95"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in items">
+                                <td ng-bind="item.name"></td>
+                                <td ng-bind="item.description"></td>
+                                <td>
+                                    <div layout="row" class="buttons">
+                                        <a ng-href="/complex/edit/{{item.id}}" title="Редактировать">
+                                            <md-icon class="material-icons">create</md-icon>
+                                        </a>&nbsp;
+                                        <a ng-click="deleteItem(item.id)" aria-label="Remove" title="Удалить">
+                                            <md-icon class="material-icons">delete</md-icon>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-show="!loading && items.length === 0">
+                                <td colspan="6" class="text-center">Жилищные комплексы не найдены</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <pagination page="filter.page" limit="filter.limit" total="total" load-data="loadData($page, $limit)"></pagination>
+                </div>
+            </div>
+        </md-content>
+    </md-tab>
+</md-tabs>

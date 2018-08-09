@@ -1,0 +1,125 @@
+<section class="content">
+    <div class="row">
+        <div class="col-1-2">
+            <map lat="object.lat" lng="object.lng" ng-if="object"></map>
+            <br>
+            <md-button ng-disabled="progress" href="/objects/edit/{{id}}" class="md-raised md-primary">Редактировать</md-button>
+            <md-button ng-disabled="progress" ng-click="deleteItem()" class="md-raised md-warn">Удалить</md-button>
+        </div>
+        <div class="col-1-2 content">
+            <div>Адрес: {{object.address}}</div>
+            <div>Тип недвижимости: {{i18n('object_types', object.type)}}</div>
+            <div>Материал дома: {{i18n('object_materials', object.material)}}</div>
+            <div>Муниципальный район: {{object.district_m ? districts[object.district_m] : '-'}}</div>
+            <div>Общепринятый район: {{object.district_o ? districts[object.district_o] : '-'}}</div>
+            <div>Застройщик: {{object.developer_name||'-'}}</div>
+            <div>Жилищный комплекс {{object.complex_name||'-'}}</div>
+            <div>Год постройки: {{object.year}}</div>
+            <div>Год постройки: {{object.year}}</div>
+            <div>Описание: {{object.description||'-'}}</div>
+            <div>Служебная отметка: {{object.comment||'-'}}</div>
+            <div>Состояние: {{object.condition ? i18n('object_conditions', object.condition) : '-'}}</div>
+            
+            <div>Количество этажей: {{object.cnt_floors}}</div>
+            <div>Количество подъездов: {{object.cnt_porchs}}</div>
+            <div>Количество лифтов: {{object.cnt_lifts||'0'}}</div>
+            <div>Год последнего кап ремонта: {{object.last_cap||'-'}}</div>
+            <div>Год последнего кап ремонта электроснабжения: {{object.last_el||'-'}}</div>
+            <div>Год последнего кап ремонта крыши: {{object.last_roof||'-'}}</div>
+            <div>Год последнего кап ремонта фасада: {{object.last_fasade||'-'}}</div>
+            <div>Год замены лифтов: {{object.lifts_changed||'-'}}</div>
+        </div>
+    </div>
+    <table class="table table-hover" style="margin-top: 20px;" ng-if="object.type==1">
+        <thead>
+            <tr>
+                <th>Кол-во комнат</th>
+                <th>Общая площадь</th>
+                <th>Жилая площадь</th>
+                <th>Площадь кухни</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1 комната</td>
+                <td>
+                    <div style="padding-left: 60px;">{{object.sq1_c||'-'}}
+                </td>
+                <td>
+                    <div style="padding-left: 60px;">{{object.sq1_l||'-'}}
+                </td>
+                <td>
+                    <div style="padding-left: 60px;">{{object.sq1_k||'-'}}
+                </td>
+            </tr>
+            <tr>
+                <td>2 комнаты</td>
+                <td>
+                    <div style="padding-left: 60px;">{{object.sq2_c||'-'}}
+                </td>
+                <td>
+                    <div style="padding-left: 60px;">{{object.sq2_l||'-'}}
+                </td>
+                <td>
+                    <div style="padding-left: 60px;">{{object.sq2_k||'-'}}
+                </td>
+            </tr>
+            <tr>
+                <td>3 комнаты</td>
+                <td>
+                    <div style="padding-left: 60px;">{{object.sq3_c||'-'}}
+                </td>
+                <td>
+                    <div style="padding-left: 60px;">{{object.sq3_l||'-'}}
+                </td>
+                <td>
+                    <div style="padding-left: 60px;">{{object.sq3_k||'-'}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <md-divider></md-divider>
+    <br><br>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Наименование</th>
+                <th>Стоимость, руб</th>
+                <th>Дата добавления</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="ad in ads">
+                <td><img class="mini-photo" ng-src="/uploads/ads/{{ad.id}}_th.jpg" onerror="this.src='/img/no-photo-th.png'"/></td>
+                <td>{{ad.name}}</td>
+                <td>{{ad.price}}</td>
+                <td>{{ad.created_at}}</td>
+                <td>
+                    <div layout="row" class="buttons">
+                        <a ng-href="/ads/view/{{ad.id}}" title="Просмотр">
+                            <md-icon class="material-icons">view_headline</md-icon>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-if="ads && ads.length===0">
+                <td colspan="5" class="text-center">В этом здании пока не добавлено ни одного объявления</td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <md-divider></md-divider>
+    <br>
+    <div class="fileupload-block" flex layout="row">
+        <md-card ng-repeat="photo in photos" flex="25" layout="column" layout-align="space-between space-between" class="fileupload-card" ng-class="{true: 'main-photo'}[photo.main==1]">
+            <img ng-src="{{'/uploads/photos/' + photo.folder + '/' + photo.filename + '_th.jpg'}}" class="md-card-image" alt="">
+            <md-card-content>{{photo.description}}</md-card-content>
+        </md-card>
+    </div>
+    <div class="text-center" ng-if="photos && photos.length===0">У этого здания пока нет фотографий</div>
+    <br>
+    <br>
+</section>

@@ -1,0 +1,23 @@
+<div class="pagination-block" layout="row">
+    <div flex layout="row" layout-align="center center">
+        <md-button class="md-fab md-mini md-primary" aria-label="" ng-click="changePage('prev')" ng-disabled="$ctrl.page==1" ng-if="totalPages > 1"><</md-button>
+        
+        <form ng-submit="changePage()">
+            <md-input-container class="text-center page-input" ng-if="totalPages > 1">
+                <label>Страница</label>
+                <input ng-model="$ctrl.page" aria-label="Pagination" type="text" maxlength="4" class="text-center"/>
+                <div class="text-center mini-text">из {{totalPages}}</div>
+            </md-input-container>
+            <input type="submit"/>
+        </form>
+        
+        <md-button class="md-fab md-mini md-primary" aria-label="" ng-click="changePage('next')" ng-disabled="$ctrl.page == totalPages" ng-if="totalPages > 1">></md-button>
+    </div>
+    <div flex="nogrow">
+        <md-input-container>
+            <md-select aria-label="Set Pagination" ng-model="$ctrl.limit" ng-change="changeLimit()">
+                <md-option ng-repeat="p in pages" value="{{p}}">{{p}}</md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+</div>

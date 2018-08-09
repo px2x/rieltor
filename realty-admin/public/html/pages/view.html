@@ -1,0 +1,16 @@
+<section class="content">
+    <div class="row">
+        <div class="col-1-2 content">
+            <div>Заголовок: {{page.title}}</div>
+            <div>Slug: /{{page.slug}}</div>
+            <div>Заголовок страницы (meta title): {{page.meta_title}}</div>
+            <div>Ключевые слова (meta keywords): {{page.meta_keywords}}</div>
+            <div>Описание (meta description): {{page.meta_description}}</div>
+            <div>Текст страницы:</div>
+            <div ng-bind-html="page.content"></div>
+            <br>
+            <md-button ng-disabled="progress" href="/pages/edit/{{id}}" class="md-raised md-primary">Редактировать</md-button>
+            <md-button ng-disabled="progress" ng-click="deleteItem()" class="md-raised md-warn">Удалить</md-button>
+        </div>
+    </div>
+</section>

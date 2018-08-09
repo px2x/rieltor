@@ -1,0 +1,43 @@
+<section class="content">
+    <div class="row">
+        <div class="col-1-2">
+            <map lat="object.lat" lng="object.lng" ng-if="object"></map>
+            <br>
+            <!--<md-button ng-disabled="progress" href="/objects/edit/{{id}}" class="md-raised md-primary">Редактировать</md-button>-->
+            <md-button ng-disabled="progress" ng-click="deleteItem()" class="md-raised md-warn">Удалить</md-button>
+        </div>
+        <div class="col-1-2 content">
+            <div>Фамилия Имя Отчество: {{user.name}}</div>
+            <div>Телефон: {{user.phone}}</div>
+            <div>Email: {{user.email}}</div>
+            <div>Город: {{user.city}}</div>
+            <div>Дата создания: {{user.created_at}}</div>
+        </div>
+    </div>
+    <md-divider></md-divider>
+    <br><br>
+    
+    <table class="table table-hover" style="margin-top: 20px;" >
+        <thead>
+            <tr>
+                <th>Дата заказа</th>
+                <th>Просмотреть заказ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="order in orders">
+                <td>order.date</td>
+                <td>
+                    <div layout="row" class="buttons">
+                            <a ng-href="/orders/view/{{order.id}}" title="Просмотр">
+                                <md-icon class="material-icons">view_headline</md-icon>
+                            </a>&nbsp;
+<!--                            <a ng-click="deleteItem(item.id)" aria-label="Remove" title="Удалить">
+                                <md-icon class="material-icons">delete</md-icon>
+                            </a>-->
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>

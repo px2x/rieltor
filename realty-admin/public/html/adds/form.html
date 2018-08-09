@@ -1,0 +1,268 @@
+<section class="content">
+    <form ng-submit="submit()" name="form"> 
+        <div class="row">
+            <div class="col-1-2">
+                <map lat="ad.lat" lng="ad.lng" ng-hide="!ad"></map>
+                <div ng-show="!!selectedAddress">
+                    <div layout="row" style="margin-top:20px;" layout-align="space-between start">
+                        <md-autocomplete flex="45" ng-disabled="object"
+                            md-items="item in searchData(developer, 'developers')"
+                            md-search-text="developer"
+                            md-selected-item="selectedDeveloper"
+                            md-search-text-change="searchData(developer, 'developers')"
+                            md-item-text="item.name"
+                            md-min-length="3"
+                            md-max-length="10"
+                            placeholder="Застройщик"
+                            md-readonly="selectedAddress.readonly">
+                            <md-item-template>
+                                <span md-highlight-text="name">{{item.name}}</span>
+                            </md-item-template>
+                        </md-autocomplete>
+                        <md-autocomplete flex="45" ng-disabled="object"
+                            md-items="item in searchData(complex, 'complexes')"
+                            md-search-text="complex"
+                            md-selected-item="selectedComplex"
+                            md-search-text-change="searchData(complex, 'complexes')"
+                            md-item-text="item.name"
+                            md-min-length="3"
+                            md-max-length="10"
+                            placeholder="Жилищный комплекс"
+                            md-readonly="selectedAddress.readonly">
+                            <md-item-template>
+                                <span md-highlight-text="name">{{item.name}}</span>
+                            </md-item-template>
+                        </md-autocomplete>
+                    </div>
+                    <div layout="row" layout-align="space-between start" style="margin-top: 10px;">
+                        <div flex="100">
+                            <md-input-container class="no-errors">
+                                <label>Название</label>
+                                <input ng-model="nameADS" type="text" maxlength="255" ng-disabled="true" ng-value="nameADS" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div layout="row" layout-align="space-between start" style="margin-top: 10px;">
+                        <div flex="22">
+                            
+                            <md-input-container class="no-errors">
+                                <label>Состояние жилья</label>
+                                <md-select ng-model="ad.condition" required>
+                                    <md-option ng-repeat="(k,v) in conditions" value="{{k}}">
+                                        {{v}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div flex="22">
+                            <md-input-container class="no-errors">
+                                <label>Цена</label>
+                                <input ng-model="ad.price" type="text" />
+                            </md-input-container>
+                        </div>
+                        <div flex="22">
+                            <md-input-container class="no-errors">
+                                <label>Цена со скидкой</label>
+                                <input ng-model="ad.price_d" type="text" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div layout="row" layout-align="space-between start" style="margin-top: 10px;">
+                        <div flex="45">
+                            <md-checkbox aria-label="Disabled checkbox" ng-model="ad.popular">
+                                Популярный
+                            </md-checkbox>
+                        </div>
+                        <div flex="45" ng-if="ad.warning">
+                            <md-checkbox aria-label="Disabled checkbox" ng-model="ad.warning_reset">
+                                <img src="/img/warning_icon.png" />
+                                Снять предупреждение
+                            </md-checkbox>
+                        </div>
+<!--                        <md-autocomplete flex="45"
+                            md-items="item in searchData(user, 'users')"
+                            md-search-text="user"
+                            md-selected-item="selectedUser"
+                            md-search-text-change="searchData(user, 'users')"
+                            md-item-text="item.name"
+                            md-min-length="3"
+                            md-max-length="10"
+                            placeholder="Пользователь"
+                            md-readonly="selectedAddress.readonly">
+                            <md-item-template>
+                                <span md-highlight-text="name">{{item.name}}</span>
+                            </md-item-template>
+                        </md-autocomplete>-->
+                    </div>
+                    <div layout="row" layout-align="space-between start" style="margin-top: 10px;">
+                        <div flex="45" ng-show="ad.type == '1' || ad.type == '2' || ad.type == '4' || ad.type == '5'">
+                            <md-checkbox aria-label="Disabled checkbox" ng-model="ad.rent" ng-change="changeName()">
+                                Аренда
+                            </md-checkbox>
+                        </div>
+                        <div flex="45">
+                            <md-checkbox aria-label="Disabled checkbox" ng-model="ad.publish">
+                                Опубликовать 
+                            </md-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1-2 content">
+                <div ng-show="editAddress" layout="row" layout-align="space-between" style="padding-left: 0px; height: 45px;">
+                    <md-autocomplete flex="70" 
+                        md-items="item in searchAddress(address)"
+                        md-search-text="address"
+                        md-selected-item="selectedAddress"
+                        md-search-text-change="searchAddress(address)"
+                        md-item-text="item.address"
+                        md-min-length="3"
+                        md-max-length="10"
+                        placeholder="Улица + дом">
+                        <md-item-template>
+                            <span md-highlight-text="address">{{item.address}}</span>
+                        </md-item-template>
+                    </md-autocomplete>
+                </div>
+                <md-button ng-show="editAddress" style="margin-left: 0px;" class="md-raised md-primary" ng-disabled="!selectedAddress" ng-click="saveAddress()">Сохранить адрес</md-button>
+                <md-button ng-show="editAddress" style="margin-left: 0px;" class="md-raised md-primary" ng-click="closeAddress()">Отмена</md-button>
+                <div ng-hide="editAddress">
+                    <div class="text-muted" ng-bind="selectedAddress.address||'Адрес не указан'"></div>
+                    <md-button style="margin-left: 0px;" ng-disabled="selectedAddress.readonly" class="md-raised md-primary add-parking-btn" ng-click="editAddress=true">Изменить адрес</md-button>
+                    <br>
+                    <div ng-show="searchObject">Идет поиск данных об объекте...</div>
+                    <div ng-show="!searchObject">
+                        <div ng-show="searchObject">Идет поиск данных об объекте</div>
+                    </div>
+                </div>
+                <div ng-show="!!selectedAddress">
+                    <div layout="row" layout-align="space-between start">
+                        <md-input-container flex="50" style="margin-bottom: 0px;">
+                            <label>Тип недвижимости</label>
+                            <md-select ng-model="ad.type" required ng-change="selectType()">
+                                <md-option ng-repeat="(k,v) in adsTypes" value="{{k}}">
+                                  {{v}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container flex="30" style="margin-bottom: 0px;" class="no-errors">
+                            <label>Этаж</label>
+                            <input ng-model="ad.floor" type="text" maxlength="3"/>
+                        </md-input-container>
+                    </div>
+                    <div layout="row" layout-align="space-between start">
+                        <md-input-container flex="50" style="margin-bottom: 0px;">
+                            <label>Материал дома</label>
+                            <md-select ng-model="ad.material" required ng-disabled="object">
+                                <md-option ng-repeat="(k,v) in objectMaterials" value="{{k}}">
+                                  {{v}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container flex="30" style="margin-bottom: 0px;" class="no-errors">
+                            <label>Этажей в доме</label>
+                            <input ng-model="ad.floor_t" required type="text" maxlength="3" ng-disabled="object" />
+                        </md-input-container>
+                    </div>
+                    <div layout="row" layout-align="space-between start">
+                        <md-input-container flex="45" style="margin-bottom: 0px;">
+                            <label>Муниципальный район</label>
+                            <md-select ng-model="ad.district_m" ng-disabled="object">
+                                <md-option ng-repeat="(k,v) in districtsM" required value="{{k}}">
+                                  {{v}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container flex="45" style="margin-bottom: 0px;">
+                            <label>Общепринятый район</label>
+                            <md-select ng-model="ad.district_o" ng-disabled="object">
+                                <md-option ng-repeat="(k,v) in districtsO" required value="{{k}}">
+                                  {{v}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div layout="row" layout-align="space-between start">
+                        <md-input-container flex="50" style="margin-bottom: 0px;">
+                            <label>Подтип</label>
+                            <md-select ng-model="ad.subtype" ng-change="changeName()" ng-hide="ad.type == 4">
+                                <md-option value=" "></md-option>
+                                <md-option ng-repeat="(k,v) in AdsSubtype" value="{{k}}">
+                                  {{v}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container flex="45" style="margin-bottom: 0px;" class="no-errors" ng-hide="ad.type == 4">
+                            <label>Количество комнат</label>
+                            <input ng-model="ad.rooms" type="text" maxlength="2" required ng-change="selectRoom()"/>
+                        </md-input-container>
+                    </div>
+                    <div layout="row" layout-align="space-between start">
+                        <md-input-container flex="50" style="margin-bottom: 0px;" ng-hide="ad.type == 4">
+                            <label>Общая площадь</label>
+                            <input ng-model="ad.sq1" type="text" maxlength="4" ng-change="changeName()"/>
+                        </md-input-container>
+                        <md-input-container flex="45" style="margin-bottom: 0px;" class="no-errors" ng-hide="ad.type == 4">
+                            <label>еденица измерения площади</label>
+                            <md-select ng-model="ad.sqt1" required>
+                                <md-option ng-repeat="(k,v) in ads_pltype" value="{{k}}">{{v}}</md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div layout="row" layout-align="space-between start" style="margin-top: -25px;">
+                        <md-input-container flex="50" style="margin-bottom: 0px;" ng-hide="ad.type == 4">
+                            <label>жилая площадь</label>
+                            <input ng-model="ad.sq2" type="text" maxlength="4" ng-change="changeName()" />
+                        </md-input-container>
+                        <md-input-container flex="45" style="margin-bottom: 0px;" class="no-errors" ng-hide="ad.subtype == 1 || ad.subtype == 2 || ad.type == 4">
+                            <label>площадь кухни</label>
+                            <input ng-model="ad.sq3" type="text" maxlength="4" ng-change="changeName()" />
+                        </md-input-container>
+                    </div>
+                    <div layout="row" layout-align="space-between start" style="margin-top: -25px;">
+                        <md-input-container flex="50" style="margin-bottom: 0px;" ng-show="ad.type == 3 || ad.type == 4">
+                            <label>площадь участка/гаража</label>
+                            <input ng-model="ad.sq4" type="text" maxlength="4" ng-change="changeName()" />
+                        </md-input-container>
+                        <md-input-container flex="45" style="margin-bottom: 0px;" class="no-errors" ng-show="ad.type == 3 || ad.type == 4">
+                            <label>единица измерения площади участка/гаража</label>
+                            <md-select ng-model="ad.sqt4" required>
+                                <md-option ng-repeat="(k,v) in ads_pltype" value="{{k}}">{{v}}</md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div layout="row" layout-align="space-between start">
+                        <md-input-container flex="100" style="margin-bottom: 0px;" class="no-errors">
+                            <label>Описание</label>
+                            <textarea ng-model="ad.description"></textarea>
+                        </md-input-container>
+                    </div>
+                    <div layout="row" layout-align="space-between start">
+                        <md-input-container flex="100" style="margin-bottom: 0px;" class="no-errors">
+                            <label>Служебная отметка</label>
+                            <input ng-model="ad.comment" type="text" maxlength="255" />
+                        </md-input-container>
+                    </div>
+                    <div layout="row" layout-align="">
+                        <md-input-container flex="30" style="margin-bottom: 0px;" class="no-errors">
+                            <label>Год постройки</label>
+                            <input ng-model="ad.year" type="text" maxlength="4"/>
+                        </md-input-container>
+                        <md-input-container flex="30" style="margin-bottom: 0px;margin-left:15px;" class="no-errors">
+                            <label>Контактный телефон</label>
+                            <input ng-model="ad.phone" type="text" maxlength="15"/>
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <md-divider></md-divider>
+        <h3>Галарея</h3>
+        <fileupload view-mode="false" photos="photos"></fileupload>
+        <md-divider></md-divider>
+        <br>
+        <md-button class="md-raised md-primary" ng-click="submit()" aria-label="Submit" ng-disabled="saving || $form.invalid || !selectedAddress" style="margin-left: 0px;" ng-bind="saveButton"></md-button>
+        <md-button class="md-raised md-warn" aria-label="Cancel" ng-click="back()">Отмена</md-button>
+    </form>
+</section>

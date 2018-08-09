@@ -1,0 +1,33 @@
+<section class="content">
+    <form ng-submit="submit()" name="form"> 
+        <div layout="row" layout-align="space-between start">
+            <md-input-container flex="30" style="margin-bottom: 0px;" ng-class="pristine.type ? 'md-changed' : ''">
+                <label>Выберете город</label>
+                <md-select ng-model="district.city_id" required>
+                    <md-option ng-repeat="(k,v) in cities" value="{{v.id}}">
+                      {{v.name}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div layout="row" layout-align="space-between start">
+            <md-input-container flex="30" style="margin-bottom: 0px;" ng-class="pristine.type ? 'md-changed' : ''">
+                <label>Выберете тип района</label>
+                <md-select ng-model="district.type" required>
+                    <md-option ng-repeat="(k, st) in type" ng-value="k">
+                        {{st}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div layout="row" layout-align="space-between start">
+            <md-input-container flex="30" style="margin-bottom: 0px;" class="no-errors">
+                <label>Название района</label>
+                <input ng-model="district.name" required type="text"/>
+            </md-input-container>
+        </div>
+        <br>
+        <md-button class="md-raised md-primary" ng-click="submit()" aria-label="Submit" ng-disabled="saving || $form.invalid" style="margin-left: 0px;" ng-bind="saveButton"></md-button>
+        <md-button class="md-raised md-warn" aria-label="Cancel" ng-click="back()">Отмена</md-button>
+    </form>
+</section>

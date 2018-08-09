@@ -1,0 +1,60 @@
+<div layout="column">
+    <div layout="row" layout-xs="column">
+        <md-input-container class="md-icon-float md-block" flex="40">
+            <form ng-submit="loadData(true);">
+                <!-- Use floating label instead of placeholder -->
+                <label>Поиск</label>
+                <input ng-model="filter.search" type="text"/>
+            </form>
+        </md-input-container>
+        <div flex></div>
+        <md-button title="" ng-href="/objects/create" class="md-fab md-mini md-primary" aria-label="Add building" flex="none">
+            <md-tooltip md-direction="top">Добавить новый объект</md-tooltip>
+            <md-icon class="material-icons">add</md-icon>
+        </md-button>
+    </div>
+
+    <div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th class="" data-name='street'>Адрес</th>
+                    <th class="nowrap text-center fixed-width" data-name='type' width="150">Район</th>
+                    <th class="nowrap text-center fixed-width" data-name='type' width="95">Тип&nbsp;недвижимости</th>
+                    <th class="nowrap text-center fixed-width" data-name='material' width="95">Материал&nbsp;дома</th>
+                    <th class="nowrap text-center fixed-width" data-name='year' width="95">Год&nbsp;постройки</th>
+                    <th class="nowrap text-center fixed-width" width="95" data-name='cnt_floors'>Количество&nbsp;этажей</th>
+                    <th class="fixed-width" width="95"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in items">
+                    <td ng-bind="item.address"></td>
+                    <td ng-bind="item.district_m ? districts[item.district_m] : '-'" class="text-center"></td>
+                    <td ng-bind="item.type ? i18n('object_types', item.type) : '-'" class="text-center"></td>
+                    <td ng-bind="item.material ? i18n('object_materials', item.material) : '-'" class="text-center"></td>
+                    <td ng-bind="item.year" class="text-center"></td>
+                    <td ng-bind="item.cnt_floors" class="text-center"></td>
+                    <td>
+                        <div layout="row" class="buttons">
+                            <a ng-href="/objects/view/{{item.id}}" title="Просмотр">
+                                <md-icon class="material-icons">view_headline</md-icon>
+                            </a>&nbsp;
+                            <a ng-href="/objects/edit/{{item.id}}" title="Редактировать">
+                                <md-icon class="material-icons">edit</md-icon>
+                            </a>&nbsp;
+                            <a ng-click="deleteItem(item.id)" aria-label="Remove" title="Удалить">
+                                <md-icon class="material-icons">delete</md-icon>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-show="!loading && items.length === 0">
+                    <td colspan="7" class="text-center">Объекты не найдены</td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination page="filter.page" limit="filter.limit" total="total" load-data="loadData($page, $limit)"></pagination>
+    </div>
+    
+</div>
